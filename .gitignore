@@ -1,0 +1,5 @@
+python
+/env
+ngrok.exe
+.vscode
+__pycache__
