@@ -4,7 +4,8 @@ tg = telegram_response()
 ff = fulfillment_response()
 products_final = []
 
-def add_products(products:list):
+def add_products(parameters:dict):
+    products = parameters.get('product')
     products_final.extend(products)
 
     fulfillment_text = 'Products added succesfully to Cart! Do you wish to add more product?'
@@ -17,9 +18,11 @@ def add_products(products:list):
 
     return reply
 
-def delete_products(products:list):
+def delete_products(parameters:dict):
+    products = parameters.get('product')
     try:
-        products_final.remove()
+        for i in products:
+            products_final.remove(i)
         fulfillment_text = 'Products removed from cart succesfully!'
     except ValueError:
         fulfillment_text = products," weren't added to the cart!"
@@ -31,3 +34,22 @@ def delete_products(products:list):
     reply = ff.main_response(fulfillment_text, ff_msg)
     return reply
 
+def update_products(parameters:dict):
+    product_from = parameters.get('product-from')
+    product_to = parameters.get('product-to')
+    
+    
+    try:
+        for i in product_from:
+            products_final.remove(i)
+        products_final.extend(product_to)
+        fulfillment_text = 'Products ', product_from, ' swapped with', product_to, ' succesfully!'
+    except ValueError:
+        fulfillment_text = product_to," weren't added to the cart!"
+    
+    ff_text = ff.fulfillment_text(fulfillment_text)
+    tg_sr = tg.text_response(fulfillment_text)
+    ff_msg = ff. fulfillment_messages([tg_sr])
+    reply = ff.main_response(fulfillment_text, ff_msg)
+
+    return reply
