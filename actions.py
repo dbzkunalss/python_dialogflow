@@ -20,10 +20,14 @@ def add_products(products:list):
 def delete_products(products:list):
     try:
         products_final.remove()
+        fulfillment_text = 'Products removed from cart succesfully!'
     except ValueError:
         fulfillment_text = products," weren't added to the cart!"
     
-    ff_text = ff.fulfillment_text(fulfillmentText)
-
     
+    ff_text = ff.fulfillment_text(fulfillment_text)
+    tg_sr = tg.text_response(fulfillment_text)
+    ff_msg = ff. fulfillment_messages([tg_sr])
+    reply = ff.main_response(fulfillment_text, ff_msg)
     return reply
+
