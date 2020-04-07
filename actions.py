@@ -53,3 +53,15 @@ def update_products(parameters:dict):
     reply = ff.main_response(fulfillment_text, ff_msg)
 
     return reply
+
+def check_status():
+    if len(products_final) == 0:
+        fulfillment_text = 'Your cart is empty!'
+    else:
+        fulfillment_text = ", ".join(products_final), ' are in your cart!'
+        
+    tg_sr = tg.text_response(fulfillment_text)
+    ff_msg = ff. fulfillment_messages([tg_sr])
+    reply = ff.main_response(fulfillment_text, ff_msg)
+    
+    return reply

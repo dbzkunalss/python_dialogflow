@@ -24,7 +24,7 @@ def results():
     # fetch action from json
     action = req.get('queryResult').get('action')
     if action == 'getting.started':
-        #
+        
 
         print(reply)
 
